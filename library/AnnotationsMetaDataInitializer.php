@@ -21,6 +21,9 @@ class AnnotationsMetaDataInitializer
 		$reflection = $di['annotations']->get($model);
 
 		$properties = $reflection->getPropertiesAnnotations();
+		if (!$properties) {
+			throw new Exception("There are no properties defined on the class");
+		}
 
 		$attributes = array();
 		$nullables = array();
@@ -29,7 +32,7 @@ class AnnotationsMetaDataInitializer
 		$numericTypes = array();
 		$primaryKeys = array();
 		$nonPrimaryKeys = array();
-		$identity = null;
+		$identity = false;
 
 		foreach ($properties as $name => $collection) {
 
